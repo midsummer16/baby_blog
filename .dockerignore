@@ -1,0 +1,14 @@
+.git
+.gitignore
+.superpowers
+__pycache__
+*.pyc
+*.pyo
+*.swp
+.DS_Store
+node_modules
+frontend/node_modules
+backend/data
+backend/media
+*.log
+docs
