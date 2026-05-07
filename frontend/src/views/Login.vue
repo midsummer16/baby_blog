@@ -11,7 +11,7 @@ const activeTab = ref('login')
 const loading = ref(false)
 
 const loginForm = reactive({ username: '', password: '' })
-const registerForm = reactive({ username: '', email: '', password: '', confirmPassword: '' })
+const registerForm = reactive({ username: '', email: '', password: '', confirmPassword: '', invitationCode: '' })
 
 const loginRules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -26,6 +26,7 @@ const registerRules = {
     { required: true, message: '请确认密码', trigger: 'blur' },
     { validator: (rule, value, cb) => value === registerForm.password ? cb() : cb(new Error('两次密码不一致')), trigger: 'blur' },
   ],
+  invitationCode: [{ required: true, message: '请输入邀请码', trigger: 'blur' }],
 }
 
 const loginFormRef = ref(null)
@@ -54,6 +55,7 @@ async function handleRegister() {
       email: registerForm.email,
       password: registerForm.password,
       password2: registerForm.confirmPassword,
+      invitation_code: registerForm.invitationCode,
     })
     ElMessage.success('注册成功')
     router.push('/dashboard')
@@ -103,6 +105,9 @@ async function handleRegister() {
               </el-form-item>
               <el-form-item prop="confirmPassword">
                 <el-input v-model="registerForm.confirmPassword" type="password" placeholder="确认密码" :prefix-icon="'Lock'" show-password />
+              </el-form-item>
+              <el-form-item prop="invitationCode">
+                <el-input v-model="registerForm.invitationCode" placeholder="邀请码" :prefix-icon="'Key'" />
               </el-form-item>
               <el-button type="primary" size="large" :loading="loading" @click="handleRegister" class="submit-btn">
                 注册
