@@ -217,15 +217,14 @@ onMounted(() => {
           </div>
 
           <div class="post-actions">
-            <el-button
-              :type="post.is_liked ? 'danger' : 'default'"
-              size="large"
-              @click="handleLike"
-            >
-              <el-icon v-if="post.is_liked"><HeartFilled /></el-icon>
-              <el-icon v-else><Heart /></el-icon>
-              {{ post.like_count ?? 0 }}
-            </el-button>
+              <el-button
+                :type="post.is_liked ? 'danger' : 'default'"
+                size="large"
+                @click="handleLike"
+              >
+                <el-icon><component :is="post.is_liked ? 'HeartFilled' : 'Heart'" /></el-icon>
+                {{ post.like_count ?? 0 }}
+              </el-button>
             <el-button size="large">
               <el-icon><ChatDotSquare /></el-icon>
               {{ comments.length }}
