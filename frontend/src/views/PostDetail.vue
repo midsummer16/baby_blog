@@ -6,6 +6,7 @@ import {
   getPost, deletePost, toggleLike,
   getComments, createComment,
   getBlessings, createBlessing,
+  updatePostTime,
 } from '@/api'
 import { useAuthStore } from '@/stores/auth'
 import NavBar from '@/components/NavBar.vue'
@@ -29,6 +30,27 @@ const isAuthor = computed(() => {
   const postAuthorId = post.value.author?.id ?? post.value.author
   return postAuthorId === auth.user.id
 })
+
+const timeDialogVisible = ref(false)
+const editingTime = ref('')
+
+function openTimeDialog() {
+  editingTime.value = post.value?.created_at?.slice(0, 16) || ''
+  timeDialogVisible.value = true
+}
+
+async function handleSaveTime() {
+  const newTime = editingTime.value
+  if (!newTime) return ElMessage.warning('请选择时间')
+  try {
+    await updatePostTime(post.value.id, { created_at: newTime + ':00' })
+    post.value.created_at = newTime + ':00'
+    ElMessage.success('时间已修改')
+    timeDialogVisible.value = false
+  } catch (err) {
+    ElMessage.error(err.response?.data?.detail || '修改失败')
+  }
+}
 
 const images = computed(() => {
   return post.value?.media?.filter((m) => m.media_type === 'image') ?? []
@@ -157,8 +179,11 @@ onMounted(() => {
               <span class="post-author-name">{{ post.author?.username }}</span>
               <span class="post-date">{{ formattedDate(post.created_at) }}</span>
             </div>
-            <div class="post-actions-top" v-if="isAuthor">
-              <el-button type="danger" text @click="handleDelete">
+            <div class="post-actions-top">
+              <el-button v-if="auth.isAdmin" text type="warning" @click="openTimeDialog">
+                <el-icon><EditPen /></el-icon>修改时间
+              </el-button>
+              <el-button v-if="isAuthor" type="danger" text @click="handleDelete">
                 <el-icon><Delete /></el-icon>删除
               </el-button>
             </div>
@@ -289,6 +314,21 @@ onMounted(() => {
         </el-card>
       </div>
     </div>
+
+    <el-dialog v-model="timeDialogVisible" title="修改发布时间" width="90%" max-width="400px">
+      <el-date-picker
+        v-model="editingTime"
+        type="datetime"
+        placeholder="选择新的发布时间"
+        format="YYYY-MM-DD HH:mm"
+        value-format="YYYY-MM-DD HH:mm"
+        style="width:100%"
+      />
+      <template #footer>
+        <el-button @click="timeDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleSaveTime">保存</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 

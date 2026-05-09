@@ -38,6 +38,19 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
+    @action(detail=True, methods=['patch'], url_path='update-time')
+    def update_time(self, request, pk=None):
+        if not request.user.is_staff:
+            return Response({'detail': '仅管理员可修改时间'}, status=status.HTTP_403_FORBIDDEN)
+        post = self.get_object()
+        created_at = request.data.get('created_at')
+        if not created_at:
+            return Response({'detail': '请提供 created_at'}, status=status.HTTP_400_BAD_REQUEST)
+        post.created_at = created_at
+        post.save(update_fields=['created_at'])
+        serializer = self.get_serializer(post)
+        return Response(serializer.data)
+
 
 class MediaUploadView(APIView):
     permission_classes = [permissions.IsAuthenticated]

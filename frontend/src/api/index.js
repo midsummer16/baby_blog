@@ -120,4 +120,8 @@ export function changePassword(data) {
   return api.post('/api/change-password/', data)
 }
 
+export function updatePostTime(id, data) {
+  return api.patch(`/api/posts/${id}/update-time/`, data)
+}
+
 export default api
