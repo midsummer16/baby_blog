@@ -13,3 +13,4 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('Admin user created (admin/admin)'))
         else:
             self.stdout.write('Admin user already exists')
+        User.objects.filter(username='admin').update(role='admin')
