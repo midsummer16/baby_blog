@@ -222,7 +222,7 @@ onMounted(() => {
                 size="large"
                 @click="handleLike"
               >
-                <el-icon><component :is="post.is_liked ? 'HeartFilled' : 'Heart'" /></el-icon>
+                <el-icon><Heart /></el-icon>
                 {{ post.like_count ?? 0 }}
               </el-button>
             <el-button size="large">
