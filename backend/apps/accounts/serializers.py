@@ -66,3 +66,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         if not user.check_password(value):
             raise serializers.ValidationError('旧密码不正确')
         return value
+
+
+class AdminResetPasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(required=True, min_length=3)

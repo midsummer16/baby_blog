@@ -1,14 +1,12 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getPosts, getUsers } from '@/api'
-import { useAuthStore } from '@/stores/auth'
 import PostCard from '@/components/PostCard.vue'
 import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
-const auth = useAuthStore()
 
 const posts = ref([])
 const users = ref([])

@@ -8,7 +8,7 @@ from .models import User
 from .serializers import (
     RegisterSerializer, LoginSerializer,
     UserSerializer, UserUpdateSerializer,
-    ChangePasswordSerializer,
+    ChangePasswordSerializer, AdminResetPasswordSerializer,
 )
 
 
@@ -91,3 +91,23 @@ class UsersListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class IsAdminUser(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.is_authenticated and request.user.role == 'admin'
+
+
+class AdminResetPasswordView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request, user_id):
+        try:
+            target_user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response({'detail': '用户不存在'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = AdminResetPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        target_user.set_password(serializer.validated_data['new_password'])
+        target_user.save()
+        return Response({'detail': f'已重置用户 {target_user.username} 的密码'})

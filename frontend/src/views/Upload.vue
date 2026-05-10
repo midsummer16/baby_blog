@@ -13,7 +13,7 @@ const tagInput = ref('')
 const files = ref([])
 const uploading = ref(false)
 const uploadProgress = ref(0)
-const showMilestone = ref(false)
+const showMilestone = ref([])
 
 const milestoneForm = reactive({
   type: '',
@@ -21,15 +21,30 @@ const milestoneForm = reactive({
 })
 
 const milestoneTypes = [
-  { value: 'roll_over', label: '翻身' },
-  { value: 'sit', label: '坐' },
-  { value: 'crawl', label: '爬' },
-  { value: 'walk', label: '走路' },
-  { value: 'speak', label: '说话' },
-  { value: 'tooth', label: '长牙' },
-  { value: 'wean', label: '断奶' },
-  { value: 'kindergarten', label: '上幼儿园' },
-  { value: 'other', label: '其他' },
+  { value: 'birth', label: '👶 出生' },
+  { value: 'first_smile', label: '😊 第一次微笑' },
+  { value: 'roll_over', label: '🔄 翻身' },
+  { value: 'sit', label: '🪑 坐' },
+  { value: 'crawl', label: '🧸 爬' },
+  { value: 'stand', label: '🧍 站立' },
+  { value: 'walk', label: '👣 走路' },
+  { value: 'first_word', label: '👶 叫妈妈/爸爸' },
+  { value: 'speak', label: '🗣️ 说话' },
+  { value: 'tooth', label: '🦷 长牙' },
+  { value: 'first_bite', label: '🥄 第一次吃辅食' },
+  { value: 'wean', label: '🍼 断奶' },
+  { value: 'first_step', label: '👟 独立行走' },
+  { value: 'run', label: '🏃 跑步' },
+  { value: 'clap', label: '👏 拍手' },
+  { value: 'wave', label: '👋 挥手再见' },
+  { value: 'first_drawing', label: '🎨 第一幅画' },
+  { value: 'potty_train', label: '🚽 如厕训练' },
+  { value: 'kindergarten', label: '🎒 上幼儿园' },
+  { value: 'first_tooth_lost', label: '🦷 换牙' },
+  { value: 'ride_bike', label: '🚲 骑自行车' },
+  { value: 'swim', label: '🏊 游泳' },
+  { value: 'read', label: '📖 自己看书' },
+  { value: 'other', label: '⭐ 其他' },
 ]
 
 function addTag() {
@@ -108,7 +123,7 @@ async function handleSubmit() {
       media_ids: mediaIds,
     }
 
-    if (showMilestone.value && milestoneForm.type) {
+    if (showMilestone.value.includes('milestone') && milestoneForm.type) {
       postData.milestone_type = milestoneForm.type
       postData.milestone_date = milestoneForm.date
     }
@@ -116,7 +131,7 @@ async function handleSubmit() {
     const postRes = await createPost(postData)
     uploadProgress.value = 100
 
-    if (showMilestone.value && milestoneForm.type) {
+    if (showMilestone.value.includes('milestone') && milestoneForm.type) {
       try {
         await createMilestone({
           milestone_type: milestoneForm.type,
@@ -280,8 +295,8 @@ async function handleSubmit() {
 <style scoped>
 .upload-page {
   min-height: 100vh;
-  background: #f5f7fa;
-  padding-top: 60px;
+  background: var(--color-bg);
+  padding-top: calc(60px + var(--space-6));
 }
 .upload-content {
   max-width: 800px;

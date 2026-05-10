@@ -62,6 +62,9 @@ function logout() {
           </button>
           <template #dropdown>
             <el-dropdown-menu>
+              <el-dropdown-item v-if="auth.isAdmin" @click="go('UserManage')">
+                <el-icon><Setting /></el-icon>用户管理
+              </el-dropdown-item>
               <el-dropdown-item @click="goProfile">
                 <el-icon><User /></el-icon>个人信息
               </el-dropdown-item>
@@ -88,6 +91,10 @@ function logout() {
         >
           <el-icon><component :is="item.icon" /></el-icon>
           {{ item.label }}
+        </button>
+        <button v-if="auth.isAdmin" class="mobile-link" @click="go('UserManage')">
+          <el-icon><Setting /></el-icon>
+          用户管理
         </button>
       </div>
     </transition>

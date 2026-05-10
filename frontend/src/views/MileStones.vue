@@ -13,13 +13,23 @@ const dialogVisible = ref(false)
 const submitting = ref(false)
 
 const milestoneIcons = {
-  roll_over: '🔄', sit: '🪑', crawl: '🧸', walk: '👣',
-  speak: '🗣️', tooth: '🦷', wean: '🍼', kindergarten: '🎒', other: '⭐',
+  birth: '👶', first_smile: '😊', roll_over: '🔄', sit: '🪑',
+  crawl: '🧸', stand: '🧍', walk: '👣', first_word: '👶',
+  speak: '🗣️', tooth: '🦷', first_bite: '🥄', wean: '🍼',
+  first_step: '👟', run: '🏃', clap: '👏', wave: '👋',
+  first_drawing: '🎨', potty_train: '🚽', kindergarten: '🎒',
+  first_tooth_lost: '🦷', ride_bike: '🚲', swim: '🏊', read: '📖',
+  other: '⭐',
 }
 
 const milestoneLabels = {
-  roll_over: '翻身', sit: '坐', crawl: '爬', walk: '走路',
-  speak: '说话', tooth: '长牙', wean: '断奶', kindergarten: '上幼儿园', other: '其他',
+  birth: '出生', first_smile: '第一次微笑', roll_over: '翻身', sit: '坐',
+  crawl: '爬', stand: '站立', walk: '走路', first_word: '叫妈妈/爸爸',
+  speak: '说话', tooth: '长牙', first_bite: '第一次吃辅食', wean: '断奶',
+  first_step: '独立行走', run: '跑步', clap: '拍手', wave: '挥手再见',
+  first_drawing: '第一幅画', potty_train: '如厕训练', kindergarten: '上幼儿园',
+  first_tooth_lost: '换牙', ride_bike: '骑自行车', swim: '游泳', read: '自己看书',
+  other: '其他',
 }
 
 const milestoneTypes = Object.entries(milestoneIcons).map(([value, icon]) => ({

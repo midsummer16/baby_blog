@@ -57,6 +57,12 @@ const routes = [
     component: () => import('@/views/OnThisDay.vue'),
     meta: { requiresAuth: true },
   },
+  {
+    path: '/users',
+    name: 'UserManage',
+    component: () => import('@/views/UserManage.vue'),
+    meta: { requiresAuth: true },
+  },
 ]
 
 const router = createRouter({

@@ -1,13 +1,11 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { changePassword } from '@/api'
 import { useAuthStore } from '@/stores/auth'
 import NavBar from '@/components/NavBar.vue'
 import AvatarPicker from '@/components/AvatarPicker.vue'
 
-const router = useRouter()
 const auth = useAuthStore()
 
 const loading = ref(false)
@@ -218,8 +216,8 @@ async function handleChangePassword() {
 <style scoped>
 .profile-page {
   min-height: 100vh;
-  background: #f5f7fa;
-  padding-top: 60px;
+  background: var(--color-bg);
+  padding-top: calc(60px + var(--space-6));
 }
 .profile-content {
   max-width: 600px;

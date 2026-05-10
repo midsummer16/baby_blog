@@ -1,12 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { searchPosts, getUsers } from '@/api'
 import PostCard from '@/components/PostCard.vue'
 import NavBar from '@/components/NavBar.vue'
-
-const router = useRouter()
 
 const query = ref('')
 const dateFrom = ref('')
@@ -63,7 +60,7 @@ async function handleSearch() {
 }
 
 function refreshResults() {
-  // no-op for post card refresh
+  if (searched.value) handleSearch()
 }
 
 onMounted(() => {
@@ -192,8 +189,8 @@ onMounted(() => {
 <style scoped>
 .search-page {
   min-height: 100vh;
-  background: #f5f7fa;
-  padding-top: 60px;
+  background: var(--color-bg);
+  padding-top: calc(60px + var(--space-6));
 }
 .search-content {
   max-width: 800px;

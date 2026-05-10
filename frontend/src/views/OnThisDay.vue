@@ -24,7 +24,7 @@ async function fetchData() {
 }
 
 function refreshPosts() {
-  // no-op
+  fetchData()
 }
 
 onMounted(() => {
@@ -83,8 +83,8 @@ onMounted(() => {
 <style scoped>
 .on-this-day-page {
   min-height: 100vh;
-  background: #f5f7fa;
-  padding-top: 60px;
+  background: var(--color-bg);
+  padding-top: calc(60px + var(--space-6));
 }
 .otd-content {
   max-width: 800px;

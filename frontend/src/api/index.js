@@ -120,6 +120,10 @@ export function changePassword(data) {
   return api.post('/api/change-password/', data)
 }
 
+export function adminResetPassword(userId, data) {
+  return api.post(`/api/users/${userId}/reset-password/`, data)
+}
+
 export function updatePostTime(id, data) {
   return api.patch(`/api/posts/${id}/update-time/`, data)
 }
